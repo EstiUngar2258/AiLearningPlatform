@@ -3,17 +3,16 @@
 This project contains:
 - **Frontend**: React (Vite)
 - **Backend**: Node.js (Express, Mongoose)
-- **Database**: MongoDB
+- **Database**: MongoDB (Atlas or local)
 
-## Start Frontend
-```
-npm run dev
-```
+## Setup
 
-## Start Backend
-```
+Clone the repository and install dependencies for both frontend and backend:
+
+```bash
+# Install frontend dependenciesnpm run dev
+npm install
+
+# Install backend dependencies
 cd backend
-node index.js
-```
-
-Ensure MongoDB is running locally on the default port (27017).
+npm install
