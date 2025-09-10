@@ -1,0 +1,75 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.app {
+  max-width: 800px;
+  margin: 1rem auto;
+  text-align: right;
+  direction: rtl;
+}
+.form { display: grid; gap: 0.6rem; align-items: start; }
+.form label { display: flex; flex-direction: column; text-align: right; }
+.form select, .form textarea, .form input { padding: 0.6rem; font-size: 1rem; border: 1px solid #ddd; border-radius: 6px; }
+.form textarea { min-height: 100px; }
+.result { margin-top: 1rem; text-align: left; }
+.result pre { background: #f4f4f4; padding: 1rem; overflow: auto; border-radius: 6px; }
+
+.form input { padding: 0.6rem; font-size: 1rem; }
+.form button { padding: 0.6rem 1rem; font-size: 1rem; border-radius: 6px; cursor: pointer; border: none; background: #0078d4; color: #fff; }
+
+.auth { border: 1px solid #e6e6e6; padding: 1rem; border-radius: 8px; background: #fff; max-width: 480px; margin: 0 auto; box-shadow: 0 6px 18px rgba(0,0,0,0.04); }
+.auth-switch { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+.auth-switch button { padding: 0.4rem 0.8rem; border: 1px solid #ccc; background: transparent; border-radius: 6px; cursor: pointer; }
+.auth-switch button.active { background: #0078d4; color: #fff; border-color: #0078d4; }
+
+.recaptcha-note { text-align: center; color: #666; font-size: 0.9rem; margin-bottom: 0.5rem; }
+
+.error-banner { background: #ffe8e8; color: #8a1f1f; padding: 0.6rem 1rem; border-radius: 6px; border: 1px solid #f2c2c2; margin-bottom: 0.8rem; }
+
+.top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; gap: 1rem; }
+.top-row .user-info { font-size: 0.95rem; }
+.top-row .btn-logout { background: #e53e3e; color: #fff; border: none; padding: 0.5rem 0.9rem; border-radius: 6px; cursor: pointer; }
+
+.app-main { background: #fff; padding: 1rem; border-radius: 10px; border: 1px solid #eee; box-shadow: 0 6px 18px rgba(0,0,0,0.03); }
+
+.result { margin-top: 1rem; text-align: left; }
