@@ -7,19 +7,27 @@ export default function AuthForms({ onRecaptchaToken }) {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const { login, register } = useAuth();
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const recaptchaToken = await onRecaptchaToken(isRegister ? 'register' : 'login');
-    
+    setError('');
     try {
       if (isRegister) {
         await register(name, email, password, recaptchaToken);
       } else {
         await login(email, password, recaptchaToken);
       }
+      // success: clear inputs and scroll to main content
+      setName('');
+      setEmail('');
+      setPassword('');
+      setIsRegister(false);
+      const main = document.querySelector('.main-section');
+      if (main) main.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch (err) {
-      alert(err.message);
+      setError(err.message || 'Authentication failed');
     }
   };
 
@@ -40,7 +48,7 @@ export default function AuthForms({ onRecaptchaToken }) {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="form">
+  <form onSubmit={handleSubmit} className="form">
         {isRegister && (
           <label>
             שם
@@ -72,6 +80,7 @@ export default function AuthForms({ onRecaptchaToken }) {
         <button type="submit">
           {isRegister ? 'הרשמה' : 'כניסה'}
         </button>
+  {error && <div className="error-banner" style={{ marginTop: '0.75rem' }}>{error}</div>}
       </form>
     </div>
   );

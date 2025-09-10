@@ -19,6 +19,9 @@ export function AuthProvider({ children }) {
         setUserName(payload.name);
         localStorage.setItem('userName', payload.name);
       }
+      if (payload && payload.userId) {
+        setUserId(payload.userId);
+      }
     } catch (err) {
       // ignore decode errors
     }
@@ -30,14 +33,17 @@ export function AuthProvider({ children }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password, recaptchaToken })
     });
-    const json = await res.json();
-    if (json.token) {
+    const json = await res.json().catch(() => ({}));
+    if (res.ok && json.token) {
       setToken(json.token);
       localStorage.setItem('token', json.token);
       setUserId(json.user._id);
       setUserName(json.user.name);
       return true;
     }
+    // map common backend errors to friendly messages
+    if (res.status === 401) throw new Error('אימייל או סיסמה שגויים');
+    if (res.status === 400 && json && json.error === 'recaptcha_failed') throw new Error('אימות reCAPTCHA נכשל');
     throw new Error(json.error || 'Login failed');
   };
 
@@ -47,14 +53,16 @@ export function AuthProvider({ children }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, password, recaptchaToken })
     });
-    const json = await res.json();
-    if (json.token) {
+    const json = await res.json().catch(() => ({}));
+    if (res.ok && json.token) {
       setToken(json.token);
       localStorage.setItem('token', json.token);
       setUserId(json.user._id);
       setUserName(json.user.name);
       return true;
     }
+    if (res.status === 409) throw new Error('משתמש עם אימייל זה כבר קיים. התחבר/י או השתמש/י באימייל אחר');
+    if (res.status === 400 && json && json.error === 'recaptcha_failed') throw new Error('אימות reCAPTCHA נכשל');
     throw new Error(json.error || 'Registration failed');
   };
 
