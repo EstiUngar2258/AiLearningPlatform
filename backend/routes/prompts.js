@@ -1,15 +1,42 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const Prompt = require('../models/Prompt');
 const ai = require('../services/ai');
 
+
+
 router.post('/', async (req, res) => {
   try {
+    // בדיקה שיש טוקן תקין
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ error: 'AUTH_REQUIRED', message: 'יש להתחבר למערכת כדי ליצור שיעור חדש' });
+    }
+    
+    const token = authHeader.split(' ')[1];
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = decoded;
+    } catch (err) {
+      return res.status(401).json({ error: 'AUTH_REQUIRED', message: 'הסשן פג תוקף. יש להתחבר מחדש' });
+    }
+    
+    // וידוא שה-user בבקשה תואם למשתמש המחובר
+    if (!req.body.user || req.body.user !== req.user.userId) {
+      return res.status(401).json({ error: 'AUTH_REQUIRED', message: 'מזהה המשתמש לא תקין' });
+    }
+
     // if OpenAI key is invalid, return clearer guidance
     if (!ai.hasValidKey()) {
       return res.status(400).json({ error: 'OPENAI_API_KEY_INVALID', message: 'OpenAI API key is not configured or invalid. Update OPENAI_API_KEY in backend/.env with a valid key from https://platform.openai.com/account/api-keys.' });
     }
+
     const { prompt: promptText, meta } = req.body;
+    if (!promptText) {
+      return res.status(400).json({ error: 'MISSING_PROMPT', message: 'חסר טקסט השאלה' });
+    }
+
     const userMeta = meta || {};
     const { raw, parsed } = await ai.generateLesson(userMeta, promptText);
     const p = await Prompt.create({ ...req.body, response: parsed ? parsed.lesson : raw, rawResponse: raw, parsedResponse: parsed });
@@ -26,6 +53,8 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: err.message || String(err) });
   }
 });
+
+
 
 router.get('/', async (req, res) => {
   try {

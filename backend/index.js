@@ -48,17 +48,24 @@ mongoose.connection.on('disconnected', () => {
   console.log('Disconnected from MongoDB');
 });
 
-// Attempt to connect
-mongoose.connect(MONGO_URI)
-  .catch((err) => {
-    console.error('Initial MongoDB connection error:', {
-      name: err.name,
-      message: err.message,
-      code: err.code,
-      stack: err.stack
-    });
-    process.exit(1);
+// Attempt to connect with improved options
+mongoose.connect(MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  connectTimeoutMS: 30000,
+  socketTimeoutMS: 30000,
+  serverSelectionTimeoutMS: 30000,
+  heartbeatFrequencyMS: 1000,
+  retryWrites: true,
+}).catch((err) => {
+  console.error('Initial MongoDB connection error:', {
+    name: err.name,
+    message: err.message,
+    code: err.code,
+    stack: err.stack
   });
+  process.exit(1);
+});
 
 app.get('/', (req, res) => {
   res.send('AI Learning Backend is running!');

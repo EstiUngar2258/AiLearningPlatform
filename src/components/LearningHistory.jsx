@@ -1,5 +1,14 @@
 import { useState, useEffect } from 'react';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 import './LearningHistory.css';
+
+// הגדרות marked עבור תמיכה בעברית
+marked.setOptions({
+  gfm: true,
+  breaks: true,
+  smartypants: true
+});
 
 export default function LearningHistory({ userId }) {
   const [history, setHistory] = useState([]);
@@ -67,50 +76,11 @@ export default function LearningHistory({ userId }) {
               </div>
               <div className="history-response">
                 <strong>תשובה:</strong>
-                {item.parsedResponse ? (
-                  <div className="parsed-response">
-                    <h3>{item.parsedResponse.title}</h3>
-                    <div className="lesson">{item.parsedResponse.lesson}</div>
-                    {item.parsedResponse.steps?.length > 0 && (
-                      <div className="steps">
-                        <h4>שלבים:</h4>
-                        <ol>
-                          {item.parsedResponse.steps.map((step, i) => (
-                            <li key={i}>{step}</li>
-                          ))}
-                        </ol>
-                      </div>
-                    )}
-                    {item.parsedResponse.examples?.length > 0 && (
-                      <div className="examples">
-                        <h4>דוגמאות:</h4>
-                        <ul>
-                          {item.parsedResponse.examples.map((example, i) => (
-                            <li key={i}>{example}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {item.parsedResponse.exercises?.length > 0 && (
-                      <div className="exercises">
-                        <h4>תרגילים:</h4>
-                        <ul>
-                          {item.parsedResponse.exercises.map((exercise, i) => (
-                            <li key={i}>{exercise}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {item.parsedResponse.summary && (
-                      <div className="summary">
-                        <h4>סיכום:</h4>
-                        <p>{item.parsedResponse.summary}</p>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <pre>{item.response}</pre>
-                )}
+                <article className="lesson-article" dangerouslySetInnerHTML={{
+                  __html: item.response
+                    ? DOMPurify.sanitize(marked.parse(item.response))
+                    : DOMPurify.sanitize('<p>לא נמצא תוכן</p>')
+                }} />
               </div>
             </div>
           </div>

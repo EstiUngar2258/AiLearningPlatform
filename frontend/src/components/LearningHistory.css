@@ -1,0 +1,190 @@
+.learning-history {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.learning-history h2 {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.history-items {
+  display: grid;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.history-item {
+  background: var(--background-light);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.history-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.history-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.history-meta span {
+  background: var(--background-accent);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.history-content {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.history-prompt {
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  border-right: 4px solid var(--primary-color);
+}
+
+.history-response {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  line-height: 1.6;
+}
+
+.parsed-response {
+  display: grid;
+  gap: 2rem;
+}
+
+.parsed-response h3 {
+  color: var(--primary-color);
+  margin: 0;
+  font-size: 1.6rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.parsed-response h4 {
+  color: var(--text-primary);
+  margin: 0 0 1rem;
+  font-size: 1.3rem;
+}
+
+.steps, .examples, .exercises {
+  background: var(--background-light);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.steps ol,
+.examples ul,
+.exercises ul {
+  margin: 1rem 0;
+  padding-right: 2rem;
+}
+
+.steps li,
+.examples li,
+.exercises li {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.summary {
+  padding: 1.5rem;
+  background: var(--background-accent);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.summary p {
+  margin: 0;
+  line-height: 1.8;
+}
+
+.loading,
+.error,
+.no-history {
+  text-align: center;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 1.2rem;
+}
+
+.loading {
+  background: var(--background-light);
+  color: var(--text-primary);
+}
+
+.error {
+  background: #fff5f5;
+  color: var(--error-color);
+  border: 1px solid var(--error-color);
+}
+
+.no-history {
+  background: var(--background-light);
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .history-item {
+    background: var(--background-dark);
+  }
+
+  .history-prompt,
+  .history-response {
+    background: var(--background-darker);
+  }
+
+  .steps, .examples, .exercises {
+    background: var(--background-dark);
+  }
+
+  .summary {
+    background: var(--background-darker);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .learning-history {
+    padding: 1rem;
+  }
+
+  .history-item {
+    padding: 1.5rem;
+  }
+
+  .history-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .parsed-response h3 {
+    font-size: 1.4rem;
+  }
+}

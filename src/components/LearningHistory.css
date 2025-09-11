@@ -1,113 +1,351 @@
 .learning-history {
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border-color);
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.learning-history h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 2rem;
+  font-weight: 600;
 }
 
 .history-items {
   display: grid;
-  gap: 1.5rem;
-  margin-top: 1rem;
+  gap: 2rem;
 }
 
 .history-item {
   background: white;
-  padding: 1.5rem;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.2s;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
 }
 
 .history-item:hover {
-  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
 .history-meta {
   display: flex;
   gap: 1rem;
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .history-meta span {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.category {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.subcategory {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.date {
   background: #f5f5f5;
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
+  color: #666;
 }
 
 .history-content {
   display: grid;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .history-prompt {
-  font-size: 1.1rem;
-  color: var(--text-color);
+  font-size: 1.2rem;
+  color: #333;
+  line-height: 1.6;
+  background: #fafafa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-right: 4px solid #2196f3;
 }
 
 .history-response {
-  background: var(--background-light);
-  padding: 1.5rem;
-  border-radius: var(--radius-sm);
-  white-space: pre-wrap;
-}
-
-.parsed-response {
-  display: grid;
-  gap: 1.5rem;
-}
-
-.parsed-response h3 {
-  color: var(--primary-color);
-  margin: 0;
-  font-size: 1.4rem;
-}
-
-.parsed-response h4 {
-  color: var(--text-color);
-  margin: 0 0 0.5rem;
-  font-size: 1.1rem;
-}
-
-.steps ol,
-.examples ul,
-.exercises ul {
-  margin: 0.5rem 0;
-  padding-right: 1.5rem;
-}
-
-.steps li,
-.examples li,
-.exercises li {
-  margin-bottom: 0.5rem;
-}
-
-.summary {
-  padding: 1rem;
   background: white;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Article Styling */
+.lesson-article {
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Assistant', 'Segoe UI', sans-serif;
+  line-height: 1.8;
+  color: #333;
+  direction: rtl;
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Markdown Styles */
+.lesson-article h1 {
+  font-size: 2.2rem;
+  color: #000;
+  text-align: right;
+  margin: 0 0 1.5rem;
+  font-weight: 600;
+  border-bottom: 2px solid #000;
+  padding-bottom: 0.5rem;
+}
+
+.lesson-article h2 {
+  font-size: 1.5rem;
+  color: #000;
+  margin: 2rem 0 1rem;
+  font-weight: 600;
+  position: relative;
+  padding-right: 0;
+  background: #f0f0f0;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+.lesson-article > p:first-of-type {
+  font-size: 1.1rem;
+  color: #333;
+  margin: 1rem 0 2rem;
+  line-height: 1.6;
+  padding-right: 1rem;
+  border-right: 3px solid #666;
+}
+
+.lesson-article h3 {
+  font-size: 1.5rem;
+  color: #1565c0;
+  margin: 2rem 0 1rem;
+  font-weight: 600;
+}
+
+.lesson-article h4 {
+  font-size: 1.25rem;
+  color: #0d47a1;
+  margin: 1.5rem 0 1rem;
+  font-weight: 600;
+}
+
+.lesson-article p {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+  font-size: 1rem;
+  color: #333;
+}
+
+.lesson-article ul {
+  margin: 1rem 0;
+  padding-right: 2rem;
+  list-style-type: disc;
+}
+
+.lesson-article ol {
+  margin: 1rem 0;
+  padding-right: 2rem;
+  list-style-type: decimal;
+}
+
+.lesson-article li {
+  margin: 0.5rem 0;
+  line-height: 1.5;
+  color: #333;
+}
+
+.lesson-article li::marker {
+  color: #666;
+}
+
+.lesson-article strong {
+  color: #1976d2;
+  font-weight: 600;
+}
+
+.lesson-article em {
+  font-style: italic;
+  color: #555;
+}
+
+.lesson-article blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  border-right: 4px solid #2196f3;
+  background: #f5f9ff;
+  font-style: italic;
+}
+
+.lesson-article hr {
+  margin: 2rem 0;
+  border: none;
+  border-top: 2px solid #e3f2fd;
+}
+
+.article-title {
+  font-size: 2.5rem;
+  color: #1976d2;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  border-bottom: 3px solid #e3f2fd;
+  padding-bottom: 1rem;
+}
+
+.article-section {
+  margin: 3rem 0;
+  padding: 0 1rem;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  color: #2196f3;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  position: relative;
+  padding-right: 1rem;
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  right: -1rem;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #2196f3;
+  border-radius: 4px;
+}
+
+.section-content {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  text-align: justify;
+  padding: 0 1rem;
+  color: #444;
+}
+
+.subsection {
+  margin: 2rem 0;
+  padding-right: 1.5rem;
+  border-right: 3px solid #e3f2fd;
+}
+
+.subsection-title {
+  font-size: 1.4rem;
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.subsection-content {
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+/* Section Type Specific Styling */
+.article-section.introduction {
+  font-size: 1.2rem;
+  background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
+.article-section.introduction .section-content {
+  color: #1976d2;
+  font-weight: 500;
+}
+
+.article-section.main {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.article-section.examples {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+}
+
+.article-section.practice {
+  background: #e3f2fd;
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.article-section.summary {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 2px solid #2196f3;
+  margin-top: 3rem;
 }
 
 .loading,
 .error,
 .no-history {
   text-align: center;
-  padding: 2rem;
-  color: var(--text-color);
+  padding: 3rem;
+  margin: 2rem auto;
+  max-width: 600px;
   background: white;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.loading {
+  color: #2196f3;
+  font-size: 1.2rem;
 }
 
 .error {
-  color: var(--error-color);
-  background: #fff5f5;
+  color: #f44336;
+  background: #ffebee;
 }
 
 .no-history {
   color: #666;
   font-style: italic;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .learning-history h2 {
+    font-size: 2rem;
+  }
+
+  .history-item {
+    padding: 1.5rem;
+  }
+
+  .parsed-response h3 {
+    font-size: 1.5rem;
+  }
+
+  .parsed-response h4 {
+    font-size: 1.2rem;
+  }
+
+  .history-prompt {
+    font-size: 1.1rem;
+  }
 }

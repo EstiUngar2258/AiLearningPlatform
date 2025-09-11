@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const SubCategory = require('../models/SubCategory');
 
+// Create a subcategory
 router.post('/', async (req, res) => {
   try {
     const sc = await SubCategory.create(req.body);
@@ -11,6 +12,7 @@ router.post('/', async (req, res) => {
   }
 });
 
+// List subcategories
 router.get('/', async (req, res) => {
   try {
     const scs = await SubCategory.find().populate('category').sort({ createdAt: -1 });
