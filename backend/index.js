@@ -11,14 +11,54 @@ app.use(express.json());
 // enable CORS for local development
 app.use(cors());
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://esti0534162258:325451193@estihalperin.ft3uavb.mongodb.net/AI_Learning?retryWrites=true&w=majority';
+const MONGO_URI = process.env.MONGO_URI;
 
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch((err) => console.error('MongoDB connection error:', err));
+if (!MONGO_URI) {
+  console.error('MONGO_URI is not defined in environment variables');
+  process.exit(1);
+}
+
+console.log('Attempting to connect to MongoDB...');
+
+// Add event listeners for mongoose connection
+mongoose.connection.on('error', (err) => {
+  console.error('MongoDB connection error:', {
+    name: err.name,
+    message: err.message,
+    code: err.code,
+    stack: err.stack
+  });
+});
+
+mongoose.connection.on('connected', () => {
+  console.log('Successfully connected to MongoDB');
+  console.log('Database name:', mongoose.connection.name);
+  
+  // List all collections
+  mongoose.connection.db.listCollections().toArray((err, collections) => {
+    if (err) {
+      console.error('Error listing collections:', err);
+    } else {
+      console.log('Available collections:', collections.map(c => c.name));
+    }
+  });
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('Disconnected from MongoDB');
+});
+
+// Attempt to connect
+mongoose.connect(MONGO_URI)
+  .catch((err) => {
+    console.error('Initial MongoDB connection error:', {
+      name: err.name,
+      message: err.message,
+      code: err.code,
+      stack: err.stack
+    });
+    process.exit(1);
+  });
 
 app.get('/', (req, res) => {
   res.send('AI Learning Backend is running!');

@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
-export default function PromptForm({ categories = [], subcategories = [], userId = '', onSubmit }) {
+export default function PromptForm({ categories = [], subcategories = [], onSubmit }) {
   const [categoryId, setCategoryId] = useState(categories[0]?._id || '');
   const [subCategoryId, setSubCategoryId] = useState('');
   const [promptText, setPromptText] = useState(`תכין שיעור מבוא לאלגברה לכיתה ח'`);
@@ -18,9 +19,11 @@ export default function PromptForm({ categories = [], subcategories = [], userId
     setSubCategoryId(subs[0]?._id || '');
   }, [categoryId, subcategories]);
 
+  const { isAuthenticated } = useContext(AuthContext);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!userId) return alert('אין משתמש מוגדר - התחבר/הרשם');
+    if (!isAuthenticated) return alert('נא להתחבר למערכת תחילה');
     onSubmit({ category: categoryId, subCategory: subCategoryId, prompt: promptText });
   };
 

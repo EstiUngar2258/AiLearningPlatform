@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import './AuthForms.css';
 
 export default function AuthForms({ onRecaptchaToken }) {
   const [isRegister, setIsRegister] = useState(false);

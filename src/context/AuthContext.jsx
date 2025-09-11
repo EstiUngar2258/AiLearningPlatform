@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
-const AuthContext = createContext(null);
+export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
@@ -48,22 +48,41 @@ export function AuthProvider({ children }) {
   };
 
   const register = async (name, email, password, recaptchaToken) => {
-    const res = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, password, recaptchaToken })
-    });
-    const json = await res.json().catch(() => ({}));
-    if (res.ok && json.token) {
-      setToken(json.token);
-      localStorage.setItem('token', json.token);
-      setUserId(json.user._id);
-      setUserName(json.user.name);
-      return true;
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, recaptchaToken })
+      });
+
+      const json = await res.json().catch(() => ({}));
+      
+      if (res.ok && json.token) {
+        setToken(json.token);
+        localStorage.setItem('token', json.token);
+        setUserId(json.user._id);
+        setUserName(json.user.name);
+        return true;
+      }
+
+      if (res.status === 409) {
+        throw new Error('משתמש עם אימייל זה כבר קיים. התחבר/י או השתמש/י באימייל אחר');
+      }
+      
+      if (res.status === 400 && json && json.error === 'recaptcha_failed') {
+        throw new Error('אימות reCAPTCHA נכשל');
+      }
+
+      if (res.status === 500) {
+        console.error('Server error:', json);
+        throw new Error('שגיאת שרת. אנא נסה שוב מאוחר יותר.');
+      }
+
+      throw new Error(json.error || 'ההרשמה נכשלה. אנא נסה שוב.');
+    } catch (error) {
+      console.error('Registration error:', error);
+      throw error;
     }
-    if (res.status === 409) throw new Error('משתמש עם אימייל זה כבר קיים. התחבר/י או השתמש/י באימייל אחר');
-    if (res.status === 400 && json && json.error === 'recaptcha_failed') throw new Error('אימות reCAPTCHA נכשל');
-    throw new Error(json.error || 'Registration failed');
   };
 
   const logout = () => {

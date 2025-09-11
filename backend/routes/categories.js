@@ -16,7 +16,8 @@ router.get('/', async (req, res) => {
     const cats = await Category.find().sort({ createdAt: -1 });
     res.json(cats);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Error fetching categories:', err);
+    res.status(500).json({ error: err.message, details: err.stack });
   }
 });
 
