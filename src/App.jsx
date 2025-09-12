@@ -1,5 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 import './App.css';
 import Navbar from './components/Navbar';
 import HomePage from './components/HomePage';
@@ -16,11 +18,11 @@ function App() {
   const { userId, userName, token } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch('/api/categories')
+    fetch('http://localhost:5000/api/categories')
       .then(r => r.json())
       .then(data => setCategories(data));
 
-    fetch('/api/subcategories')
+    fetch('http://localhost:5000/api/subcategories')
       .then(r => r.json())
       .then(data => setSubcategories(data));
   }, []);
@@ -42,7 +44,7 @@ function App() {
         return;
       }
       
-      const res = await fetch('/api/prompts', { 
+      const res = await fetch('http://localhost:5000/api/prompts', { 
         method: 'POST', 
         headers: { 
           ...headers,
@@ -120,15 +122,47 @@ function App() {
                 onSubmit={handlePromptSubmit}
               />
               {result && (
-                <div className="result">
-                  <h2>Response</h2>
-                  <pre>{JSON.stringify(result.parsedResponse || result, null, 2)}</pre>
+                <div className="lesson-result">
+                  <div className="history-item">
+                    <div className="history-meta">
+                      <span className="category">
+                        {categories.find(c => c._id === result.category)?.name || 'ללא קטגוריה'}
+                      </span>
+                      {result.subCategory && (
+                        <span className="subcategory">
+                          {subcategories.find(s => s._id === result.subCategory)?.name}
+                        </span>
+                      )}
+                      <span className="date" dir="rtl">
+                        {new Date().toLocaleDateString('he-IL', {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}
+                      </span>
+                    </div>
+                    <div className="history-content">
+                      <div className="history-prompt">
+                        <strong>שאלה:</strong> {result.prompt}
+                      </div>
+                      <div className="history-response">
+                        <strong>תשובה:</strong>
+                        <article className="lesson-article" dangerouslySetInnerHTML={{
+                          __html: result.displayResponse || result.rawResponse
+                            ? DOMPurify.sanitize(marked.parse(result.displayResponse || result.rawResponse))
+                            : DOMPurify.sanitize('<p>לא נמצא תוכן</p>')
+                        }} />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
           } />
           
-          <Route path="/history" element={<LearningHistory />} />
+          <Route path="/history" element={<LearningHistory userId={userId} />} />
         </Routes>
       </div>
     </Router>

@@ -38,10 +38,21 @@ router.post('/', async (req, res) => {
     }
 
     const userMeta = meta || {};
+
     const { raw, parsed } = await ai.generateLesson(userMeta, promptText);
-    const p = await Prompt.create({ ...req.body, response: parsed ? parsed.lesson : raw, rawResponse: raw, parsedResponse: parsed });
-    res.status(201).json(p);
-  } catch (err) {
+
+    const saved = await Prompt.create({
+      ...req.body,
+      response: raw,
+      rawResponse: raw,
+      parsedResponse: parsed || null
+    });
+
+    const obj = saved.toObject({ getters: true });
+    obj.displayResponse = obj.rawResponse || obj.response || (obj.parsedResponse ? JSON.stringify(obj.parsedResponse) : '');
+    res.status(201).json(obj);
+  }
+   catch (err) {
     // map known ai errors to friendly responses
     if (err.message && err.message.startsWith('OPENAI_API_KEY_INVALID')) {
       return res.status(400).json({ error: 'OPENAI_API_KEY_INVALID', message: 'OpenAI rejected the API key. Create a new API key at https://platform.openai.com/account/api-keys and update backend/.env' });
@@ -70,8 +81,15 @@ router.get('/user/:userId', async (req, res) => {
       .populate('category')
       .populate('subCategory')
       .sort({ createdAt: -1 })
-      .limit(20);
-    res.json(prompts);
+      .limit(20)
+      .lean();
+
+    const mapped = prompts.map(p => {
+      const display = p.rawResponse || p.response || (p.parsedResponse ? JSON.stringify(p.parsedResponse) : '');
+      return { ...p, displayResponse: display };
+    });
+
+    res.json(mapped);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

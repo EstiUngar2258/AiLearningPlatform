@@ -48,10 +48,8 @@ mongoose.connection.on('disconnected', () => {
   console.log('Disconnected from MongoDB');
 });
 
-// Attempt to connect with improved options
+// Attempt to connect with improved options (removed deprecated flags)
 mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
   connectTimeoutMS: 30000,
   socketTimeoutMS: 30000,
   serverSelectionTimeoutMS: 30000,

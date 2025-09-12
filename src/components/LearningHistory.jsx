@@ -16,20 +16,45 @@ export default function LearningHistory({ userId }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!userId) return;
+    console.log('LearningHistory: userId changed:', userId);
+    if (!userId) {
+      console.log('LearningHistory: no userId provided');
+      return;
+    }
     
     const fetchHistory = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/prompts/user/${userId}`);
+        console.log('LearningHistory: fetching history for userId:', userId);
+        const response = await fetch(`http://localhost:5000/api/prompts/user/${userId}`);
+
         if (!response.ok) {
-          throw new Error('Failed to fetch history');
+          const txt = await response.text();
+          console.error('API returned error', response.status, txt);
+          throw new Error('שגיאה בשרת: ' + (txt || response.statusText));
         }
-        const data = await response.json();
-        setHistory(data);
+
+        const contentType = response.headers.get('content-type') || '';
+        let data = [];
+        if (contentType.includes('application/json')) {
+          const txt = await response.text();
+          try {
+            data = JSON.parse(txt);
+          } catch (e) {
+            console.warn('Invalid JSON returned from API, falling back to empty array. Raw:', txt);
+            data = [];
+          }
+        } else {
+          // unexpected content type (HTML/text) - log and show friendly message
+          const txt = await response.text();
+          console.warn('Non-JSON response from history API:', txt);
+          throw new Error('תשובת שרת לא תקינה');
+        }
+
+        setHistory(data.map(item => ({ ...item, displayResponse: item.displayResponse || item.response || item.rawResponse || '' })));
         setError(null);
       } catch (err) {
-        setError('Failed to load learning history');
+        setError(err.message || 'Failed to load learning history');
         console.error('History fetch error:', err);
       } finally {
         setLoading(false);
@@ -66,8 +91,14 @@ export default function LearningHistory({ userId }) {
                   {item.subCategory.name}
                 </span>
               )}
-              <span className="date">
-                {new Date(item.createdAt).toLocaleDateString('he-IL')}
+              <span className="date" dir="rtl">
+                {new Date(item.createdAt).toLocaleDateString('he-IL', {
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
               </span>
             </div>
             <div className="history-content">
@@ -77,8 +108,8 @@ export default function LearningHistory({ userId }) {
               <div className="history-response">
                 <strong>תשובה:</strong>
                 <article className="lesson-article" dangerouslySetInnerHTML={{
-                  __html: item.response
-                    ? DOMPurify.sanitize(marked.parse(item.response))
+                  __html: item.displayResponse
+                    ? DOMPurify.sanitize(marked.parse(item.displayResponse))
                     : DOMPurify.sanitize('<p>לא נמצא תוכן</p>')
                 }} />
               </div>

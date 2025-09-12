@@ -37,6 +37,8 @@
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
   align-items: center;
+  direction: rtl;
+  justify-content: flex-start;
 }
 
 .history-meta span {

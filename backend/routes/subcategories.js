@@ -12,6 +12,7 @@ router.post('/', async (req, res) => {
   }
 });
 
+
 // List subcategories
 router.get('/', async (req, res) => {
   try {
