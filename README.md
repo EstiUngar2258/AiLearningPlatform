@@ -1,4 +1,4 @@
-# AI Learning Platform# AI Learning Platform# AI Learning Project
+# AI Learning Platform
 
 
 
@@ -106,15 +106,9 @@ AI Learning Platform הינה פלטפורמה חדשנית המשלבת את כ
 
 ## 🛠️ דרישות מקדימות
 
-## 🏗️ מבנה הפרויקט
-
 1. **Node.js** - גרסה 18 ומעלה
-
-הפרויקט מחולק לשני חלקים עיקריים:2. **Docker** - להרצת הפרויקט בקונטיינרים
-
-3. **MongoDB** - מסד נתונים
-
-### Frontend (React + Vite)4. **Git** - לניהול קוד
+2. **Git** - לניהול קוד
+3. **Docker** (אופציונלי) - להרצת הפרויקט בקונטיינרים
 
 ```
 
