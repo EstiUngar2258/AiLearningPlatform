@@ -1,0 +1,117 @@
+.learning-history {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  color: #333;
+}
+
+.history-items {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.history-item {
+  background: white;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
+}
+
+.history-item:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.history-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.history-meta span {
+  background: #f5f5f5;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+}
+
+.history-content {
+  padding: 1.5rem;
+  background: white;
+  color: #333;
+}
+
+.history-prompt {
+  font-size: 1.1rem;
+  color: var(--text-color);
+}
+
+.history-response {
+  background: var(--background-light);
+  padding: 1.5rem;
+  border-radius: var(--radius-sm);
+  white-space: pre-wrap;
+}
+
+.parsed-response {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.parsed-response h3 {
+  color: var(--primary-color);
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.parsed-response h4 {
+  color: var(--text-color);
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.steps ol,
+.examples ul,
+.exercises ul {
+  margin: 0.5rem 0;
+  padding-right: 1.5rem;
+}
+
+.steps li,
+.examples li,
+.exercises li {
+  margin-bottom: 0.5rem;
+}
+
+.summary {
+  padding: 1rem;
+  background: white;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.loading,
+.error,
+.no-history {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-color);
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.error {
+  color: var(--error-color);
+  background: #fff5f5;
+}
+
+.no-history {
+  color: #666;
+  font-style: italic;
+}

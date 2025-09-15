@@ -1,0 +1,104 @@
+.result {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  margin: 2rem auto;
+  max-width: 800px;
+  color: #333;
+  direction: rtl;
+}
+
+.result h2 {
+  color: var(--primary);
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.parsed-response {
+  color: #333;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.parsed-response h3 {
+  color: var(--primary);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.parsed-response .lesson {
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+
+.parsed-response h4 {
+  color: var(--secondary);
+  font-size: 1.25rem;
+  margin: 2rem 0 1rem;
+}
+
+.steps ol,
+.examples ul,
+.exercises ul {
+  padding-right: 2rem;
+  margin: 1rem 0;
+}
+
+.steps li,
+.examples li,
+.exercises li {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  position: relative;
+}
+
+.steps li::marker {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.examples li::before,
+.exercises li::before {
+  content: '•';
+  color: var(--secondary);
+  font-weight: bold;
+  position: absolute;
+  right: -1.5rem;
+}
+
+.summary {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+}
+
+.summary h4 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.summary p {
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+.raw-response pre {
+  background: var(--bg-secondary);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+}

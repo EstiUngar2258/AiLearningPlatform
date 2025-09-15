@@ -1,0 +1,85 @@
+.auth {
+  max-width: 400px;
+  width: 100%;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+}
+
+.auth-switch {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.auth-switch button {
+  padding: 0.8rem 1.5rem;
+  border: 1px solid var(--primary-color);
+  background: transparent;
+  color: var(--primary-color);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.auth-switch button.active {
+  background: var(--primary-color);
+  color: var(--background-dark);
+}
+
+.auth .form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.auth label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--text-light);
+}
+
+.auth input {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  color: var(--text-light);
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.auth input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.auth button[type="submit"] {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--primary-color);
+  color: var(--background-dark);
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth button[type="submit"]:hover {
+  background: var(--primary-hover);
+}
+
+.error-banner {
+  background: rgba(255, 0, 0, 0.1);
+  color: #ff4444;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+  text-align: center;
+}
